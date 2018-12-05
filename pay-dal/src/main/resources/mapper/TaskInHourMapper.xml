@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alog.pay.mapper.TaskInHourMapper" >
+  <resultMap id="BaseResultMap" type="com.alog.pay.model.TaskInHour" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="project_id" property="projectId" jdbcType="BIGINT" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pay_task_in_hour
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.alog.pay.model.TaskInHour" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pay_task_in_hour (project_id, task_id, task_name, 
+      price)
+    values (#{projectId,jdbcType=BIGINT}, #{taskId,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.alog.pay.model.TaskInHour" >
+    update pay_task_in_hour
+    set project_id = #{projectId,jdbcType=BIGINT},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, project_id, task_id, task_name, price
+    from pay_task_in_hour
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, project_id, task_id, task_name, price
+    from pay_task_in_hour
+  </select>
+</mapper>

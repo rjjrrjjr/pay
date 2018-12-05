@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alog.pay.mapper.TaskMapper" >
+  <resultMap id="BaseResultMap" type="com.alog.pay.model.Task" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="wms" property="wms" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="attr" property="attr" jdbcType="VARCHAR" />
+    <result column="cal_type" property="calType" jdbcType="INTEGER" />
+    <result column="cal_rule" property="calRule" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pay_task
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.alog.pay.model.Task" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pay_task (wms, type, name, 
+      attr, cal_type, cal_rule
+      )
+    values (#{wms,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{attr,jdbcType=VARCHAR}, #{calType,jdbcType=INTEGER}, #{calRule,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.alog.pay.model.Task" >
+    update pay_task
+    set wms = #{wms,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      attr = #{attr,jdbcType=VARCHAR},
+      cal_type = #{calType,jdbcType=INTEGER},
+      cal_rule = #{calRule,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, wms, type, name, attr, cal_type, cal_rule
+    from pay_task
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, wms, type, name, attr, cal_type, cal_rule
+    from pay_task
+  </select>
+</mapper>

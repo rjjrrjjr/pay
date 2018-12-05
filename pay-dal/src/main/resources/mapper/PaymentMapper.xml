@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alog.pay.mapper.PaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.alog.pay.model.Payment" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="project_id" property="projectId" jdbcType="BIGINT" />
+    <result column="warehouse" property="warehouse" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="month" property="month" jdbcType="DATE" />
+    <result column="state" property="state" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="update_person" property="updatePerson" jdbcType="VARCHAR" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pay_payment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.alog.pay.model.Payment" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pay_payment (project_id, warehouse, project_name, 
+      month, state, update_time, 
+      update_person)
+    values (#{projectId,jdbcType=BIGINT}, #{warehouse,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
+      #{month,jdbcType=DATE}, #{state,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updatePerson,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.alog.pay.model.Payment" >
+    update pay_payment
+    set project_id = #{projectId,jdbcType=BIGINT},
+      warehouse = #{warehouse,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      month = #{month,jdbcType=DATE},
+      state = #{state,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_person = #{updatePerson,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, project_id, warehouse, project_name, month, state, update_time, update_person
+    from pay_payment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, project_id, warehouse, project_name, month, state, update_time, update_person
+    from pay_payment
+  </select>
+</mapper>

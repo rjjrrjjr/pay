@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.alog.pay.mapper.TaskAmountInHourMapper" >
+  <resultMap id="BaseResultMap" type="com.alog.pay.model.TaskAmountInHour" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="project_id" property="projectId" jdbcType="BIGINT" />
+    <result column="employee_id" property="employeeId" jdbcType="BIGINT" />
+    <result column="employee_name" property="employeeName" jdbcType="VARCHAR" />
+    <result column="task_id" property="taskId" jdbcType="BIGINT" />
+    <result column="task_name" property="taskName" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="DOUBLE" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pay_task_amount_in_hour
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.alog.pay.model.TaskAmountInHour" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into pay_task_amount_in_hour (project_id, employee_id, employee_name, 
+      task_id, task_name, value
+      )
+    values (#{projectId,jdbcType=BIGINT}, #{employeeId,jdbcType=BIGINT}, #{employeeName,jdbcType=VARCHAR}, 
+      #{taskId,jdbcType=BIGINT}, #{taskName,jdbcType=VARCHAR}, #{value,jdbcType=DOUBLE}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.alog.pay.model.TaskAmountInHour" >
+    update pay_task_amount_in_hour
+    set project_id = #{projectId,jdbcType=BIGINT},
+      employee_id = #{employeeId,jdbcType=BIGINT},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      task_id = #{taskId,jdbcType=BIGINT},
+      task_name = #{taskName,jdbcType=VARCHAR},
+      value = #{value,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, project_id, employee_id, employee_name, task_id, task_name, value
+    from pay_task_amount_in_hour
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, project_id, employee_id, employee_name, task_id, task_name, value
+    from pay_task_amount_in_hour
+  </select>
+</mapper>
